@@ -4,7 +4,7 @@
 **Tipo da mudança**  
 <!-- Marque o checkbox correspondente a mudança. -->
 - [ ] Correção de bug.
-- [ ] Adição de nova fucionalidade.
+- [ ] Adição de nova funcionalidade.
 
 **Issue relacionada**  
 <!-- Adicionar FIX com as issues relacionadas ao abrir o PR. Ex.: Fix #15 -->
