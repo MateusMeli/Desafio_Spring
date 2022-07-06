@@ -1,15 +1,23 @@
 package com.meli.desafio_spring.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.meli.desafio_spring.dto.ProductDto;
+import com.meli.desafio_spring.model.Product;
+import com.meli.desafio_spring.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
 public class ProductController {
+    @Autowired
+    private ProductService service;
 
-    @GetMapping("/hello")
-    public String getHello() {
-        return "Ola!";
+    @PostMapping("/insert-articles-request")
+    public ResponseEntity<List<ProductDto>> addProducts(@RequestBody List<Product> productList) {
+        return new ResponseEntity(service.addProducts(productList), HttpStatus.OK);
     }
 }
