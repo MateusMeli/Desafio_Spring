@@ -30,28 +30,32 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public List<ProductDto> getAllProducts(
-            Optional<String> category,
-            Optional<Boolean> freeShipping,
-            Optional<String> prestige) {
+            String category,
+            Boolean freeShipping,
+            String prestige,
+            Integer order) {
 
         List<Product> listProduct = repo.getAllProducts();
 
-        listProduct = productFilters(category, freeShipping, prestige, listProduct);
+        listProduct = productFilters(category, freeShipping, prestige, order, listProduct);
 
         return listProduct.stream()
                 .map(p -> ProductDto
                         .builder()
                         .productid(p.getProductId())
                         .name(p.getName())
-                        .quantity(p.getQuantity()).build())
+                        .quantity(p.getQuantity())
+                        .price(p.getPrice())
+                        .build())
                 .collect(Collectors.toList());
 
     }
 
     private List<Product> productFilters(
-            Optional<String> category,
-            Optional<Boolean> freeShipping,
-            Optional<String> prestige,
+            String category,
+            Boolean freeShipping,
+            String prestige,
+            Integer order,
             List<Product> listProduct
     ) {
 
@@ -59,60 +63,46 @@ public class ProductServiceImp implements ProductService {
 
         productListFilter.addAll(listProduct);
 
-        if (category.isPresent()) {
+        if (category != null) {
             productListFilter = productListFilter
                     .stream()
-                    .filter(c -> c.getCategory().equals(category.get()))
+                    .filter(c -> c.getCategory().equals(category))
                     .collect(Collectors.toList());
         }
-        if (freeShipping.isPresent()) {
+        if (freeShipping != null) {
             productListFilter = productListFilter
                     .stream()
-                    .filter(f -> f.getFreeShipping().equals(freeShipping.get()))
+                    .filter(f -> f.getFreeShipping().equals(freeShipping))
                     .collect(Collectors.toList());
         }
-        if (prestige.isPresent()) {
+        if (prestige != null) {
             productListFilter = productListFilter
                     .stream()
-                    .filter(p -> p.getPrestige().equals(prestige.get()))
+                    .filter(p -> p.getPrestige().equals(prestige))
                     .collect(Collectors.toList());
         }
+        if (order != null) {
+            productListFilter = sort(productListFilter, order);
+        }
+
         return productListFilter;
     }
 
-    public List<ProductDto> sort(List<ProductDto> list, Integer order) {
-        if (order == null) {
-            return list;
-        }
+    public List<Product> sort(List<Product> list, Integer order) {
         switch (order) {
             case 0:
-                list.sort(Comparator.comparing(ProductDto::getName));
+                list.sort(Comparator.comparing(Product::getName));
                 break;
             case 1:
-                list.sort(Comparator.comparing(ProductDto::getName).reversed());
+                list.sort(Comparator.comparing(Product::getName).reversed());
                 break;
             case 2:
-                list.sort(Comparator.comparing(ProductDto::getPrice));
+                list.sort(Comparator.comparing(Product::getPrice));
                 break;
             case 3:
-                list.sort(Comparator.comparing(ProductDto::getPrice).reversed());
+                list.sort(Comparator.comparing(Product::getPrice).reversed());
                 break;
         }
         return list;
-    }
-
-    @Override
-    public List<ProductDto> getAllProducts(Integer order) {
-        List<Product> list = repo.getAllProducts();
-        return sort(list.stream().map(p -> ProductDto
-                        .builder()
-                        .productid(p.getProductId())
-                        .name(p.getName())
-                        .quantity(p.getQuantity())
-                        .price(p.getPrice())
-                        .build())
-                .collect(Collectors.toList()), order);
-
-
     }
 }

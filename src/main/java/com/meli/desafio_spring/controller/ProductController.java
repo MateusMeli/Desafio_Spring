@@ -24,16 +24,11 @@ public class ProductController {
 
     @GetMapping("/products")
     public ResponseEntity<List<ProductDto>> getAllProducts(
-            @RequestParam Optional<String> category,
-            @RequestParam Optional<Boolean> freeShipping,
-            @RequestParam Optional<String> prestige) {
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) Boolean freeShipping,
+            @RequestParam(required = false) String prestige,
+            @RequestParam(required = false) Integer order) {
 
-
-        return new ResponseEntity<>(service.getAllProducts(category, freeShipping, prestige), HttpStatus.OK);
-    }
-
-    @GetMapping("/articles")
-    public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) Integer order) {
-        return new ResponseEntity(service.getAllProducts(order), HttpStatus.OK);
+        return new ResponseEntity<List<ProductDto>>(service.getAllProducts(category, freeShipping, prestige, order), HttpStatus.OK);
     }
 }

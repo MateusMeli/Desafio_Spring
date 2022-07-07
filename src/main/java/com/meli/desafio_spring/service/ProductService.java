@@ -10,12 +10,11 @@ public interface ProductService {
     List<ProductDto> addProducts(List<Product> listProduct);
 
     List<ProductDto> getAllProducts(
-            Optional<String> category,
-            Optional<Boolean> freeShipping,
-            Optional<String> prestige
+            String category,
+            Boolean freeShipping,
+            String prestige,
+            Integer order
     );
 
-    List<ProductDto> getAllProducts(Integer order);
-
-    List<ProductDto> sort(List<ProductDto> list, Integer order);
+    List<Product> sort(List<Product> list, Integer order);
 }
