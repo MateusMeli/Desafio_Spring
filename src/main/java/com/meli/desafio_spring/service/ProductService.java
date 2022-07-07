@@ -4,11 +4,11 @@ import com.meli.desafio_spring.dto.ProductDto;
 import com.meli.desafio_spring.model.Product;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductService {
     List<ProductDto> addProducts(List<Product> listProduct);
-    List<ProductDto> getAllProducts();
-    List<ProductDto> getByCategory(String category);
-    List<ProductDto> getByFreeShipping(boolean freeShipping);
-    List<ProductDto> getByPrestige(String prestige);
+
+    List<ProductDto> getAllProducts(Optional<String> category, Optional<Boolean> freeShipping, Optional<String> prestige);
+
 }

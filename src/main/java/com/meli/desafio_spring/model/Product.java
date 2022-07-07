@@ -18,7 +18,7 @@ public class Product {
     private String brand;
     private double price;
     private int quantity;
-    private boolean freeShipping;
+    private Boolean freeShipping;
     private String prestige;
 
 }

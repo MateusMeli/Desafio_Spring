@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -22,12 +23,14 @@ public class ProductController {
     }
 
     @GetMapping("/articles")
-    public ResponseEntity<List<ProductDto>> getAllProducts() {
-        return new ResponseEntity(service.getAllProducts(), HttpStatus.OK);
+    public ResponseEntity<List<ProductDto>> getAllProducts(
+            @RequestParam Optional<String> category,
+            @RequestParam Optional<Boolean> freeShipping,
+            @RequestParam Optional<String> prestige) {
+
+
+        return new ResponseEntity(service.getAllProducts(category, freeShipping, prestige), HttpStatus.OK);
     }
 
-    @GetMapping("/articles")
-    public ResponseEntity<List<ProductDto>> getByFreeShippingAndCategory(@RequestParam String category, @RequestParam boolean freeShipping) {
-        return new ResponseEntity<List<ProductDto>>(service.getByFreeShippingAndCategory(category, freeShipping), HttpStatus.OK);
-    }
+
 }
