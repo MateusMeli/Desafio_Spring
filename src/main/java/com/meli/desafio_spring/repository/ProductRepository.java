@@ -17,70 +17,65 @@ import java.util.stream.Collectors;
 
 @Repository
 public class ProductRepository {
-     private final String linkFile = "src/main/resources/product.json";
 
-     public List<ProductDto> addProducts(List<Product> listProduct) {
-          ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-          ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
-          List<Product> actualList = null;
-          List<Product> copylist = null;
+  private final String linkFile = "src/main/resources/product.json";
 
-          try {
-               actualList = Arrays.asList(mapper.readValue(new File(linkFile), Product[].class));
-               copylist = new ArrayList<>(actualList);
-               copylist.addAll(listProduct);
+  public List<ProductDto> addProducts(List<Product> listProduct) {
+    ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+    ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+    List<Product> actualList = null;
+    List<Product> copylist = null;
 
-               writer.writeValue(new File(linkFile), copylist);
-          } catch (Exception ex) {
+    try {
+      actualList = Arrays.asList(mapper.readValue(new File(linkFile), Product[].class));
+      copylist = new ArrayList<>(actualList);
+      copylist.addAll(listProduct);
 
-          }
+      writer.writeValue(new File(linkFile), copylist);
+    } catch (Exception ex) {
 
-          return copylist.stream().map( p -> ProductDto
-                  .builder()
-                  .productid(p.getProductId())
-                  .name(p.getName())
-                  .quantity(p.getQuantity()).build())
-                  .collect(Collectors.toList());
+    }
 
-     }
+    return copylist.stream().map(p -> ProductDto
+            .builder()
+            .productid(p.getProductId())
+            .name(p.getName())
+            .quantity(p.getQuantity()).build())
+        .collect(Collectors.toList());
 
-     public List<ProductDto> getAllProdutcs() {
-          ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-          List<Product> actualList = null;
-          List<Product> copylist = null;
+  }
 
-          try {
-               actualList = Arrays.asList(mapper.readValue(new File(linkFile), Product[].class));
-          } catch (Exception ex) {
-               System.out.println(ex.getMessage());
-          }
+  public List<Product> getAllProducts() {
+    ObjectMapper mapper = new ObjectMapper();
+    List<Product> lista = null;
+    try {
+      lista = Arrays.asList
+          (mapper.readValue(new File(linkFile), Product[].class));
 
-          return copylist.stream().map( p -> ProductDto
-                  .builder()
-                  .productid(p.getProductId())
-                  .name(p.getName())
-                  .quantity(p.getQuantity()).build())
-                  .collect(Collectors.toList());
-     }
+    } catch (Exception ex) {
 
-     public List<ProductDto> getByFreeShippingAndCategory(String category, boolean freeShipping) {
-          ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-          List<Product> productsList = null;
+    }
+    return lista;
+  }
 
-          try {
-               productsList = Arrays.asList(mapper.readValue(new File(linkFile), Product[].class));
-          } catch (Exception ex) {
-               System.out.println(ex.getMessage());
-          }
+    public List<ProductDto> getByFreeShippingAndCategory(String category, boolean freeShipping) {
+        ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+        List<Product> productsList = null;
 
-          return productsList.stream()
-                  .filter(p -> p.isFreeShipping() == freeShipping)
-                  .filter(p -> p.getCategory().equals(category))
-                  .map( p -> ProductDto
-                          .builder()
-                          .productid(p.getProductId())
-                          .name(p.getName())
-                          .quantity(p.getQuantity()).build())
-                  .collect(Collectors.toList());
-     }
+        try {
+            productsList = Arrays.asList(mapper.readValue(new File(linkFile), Product[].class));
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+
+        return productsList.stream()
+                .filter(p -> p.isFreeShipping() == freeShipping)
+                .filter(p -> p.getCategory().equals(category))
+                .map( p -> ProductDto
+                        .builder()
+                        .productid(p.getProductId())
+                        .name(p.getName())
+                        .quantity(p.getQuantity()).build())
+                .collect(Collectors.toList());
+    }
 }

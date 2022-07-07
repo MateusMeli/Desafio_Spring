@@ -22,6 +22,11 @@ public class ProductController {
     }
 
     @GetMapping("/articles")
+    public ResponseEntity<List<ProductDto>> getAllProducts() {
+        return new ResponseEntity(service.getAllProducts(), HttpStatus.OK);
+    }
+
+    @GetMapping("/articles")
     public ResponseEntity<List<ProductDto>> getByFreeShippingAndCategory(@RequestParam String category, @RequestParam boolean freeShipping) {
         return new ResponseEntity<List<ProductDto>>(service.getByFreeShippingAndCategory(category, freeShipping), HttpStatus.OK);
     }
