@@ -17,4 +17,9 @@ public class ProductServiceImp implements ProductService{
     public List<ProductDto> addProducts(List<Product> listProduct) {
         return repo.addProducts(listProduct);
     }
+
+    @Override
+    public List<ProductDto> getAllProducts() {
+        return repo.getAllProducts();
+    }
 }

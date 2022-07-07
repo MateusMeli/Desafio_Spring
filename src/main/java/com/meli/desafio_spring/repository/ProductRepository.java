@@ -43,4 +43,9 @@ public class ProductRepository {
                   .collect(Collectors.toList());
 
      }
+
+     public List<ProductDto> getAllProducts() {
+          List<ProductDto> list = new ArrayList<>();
+          return list;
+     }
 }
