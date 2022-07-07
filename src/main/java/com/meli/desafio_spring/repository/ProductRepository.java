@@ -1,11 +1,9 @@
 package com.meli.desafio_spring.repository;
 
-import com.fasterxml.jackson.core.PrettyPrinter;
 import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.meli.desafio_spring.dto.ProductDto;
 import com.meli.desafio_spring.model.Product;
 import org.springframework.stereotype.Repository;
 
@@ -13,49 +11,42 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class ProductRepository {
-     private final String linkFile = "src/main/resources/product.json";
 
-     public List<ProductDto> addProducts(List<Product> listProduct) {
-          ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-          ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
-          List<Product> actualList = null;
-          List<Product> copylist = null;
+    private static final String DATA = "src/main/resources/product.json";
 
-          try {
-               actualList = Arrays.asList(mapper.readValue(new File(linkFile), Product[].class));
-               copylist = new ArrayList<>(actualList);
-               copylist.addAll(listProduct);
+    public List<Product> addProducts(List<Product> listProduct) {
+        ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+        ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+        List<Product> actualList = null;
+        List<Product> copylist = null;
 
-               writer.writeValue(new File(linkFile), copylist);
-          } catch (Exception ex) {
+        try {
+            actualList = Arrays.asList(mapper.readValue(new File(DATA), Product[].class));
+            copylist = new ArrayList<>(actualList);
+            copylist.addAll(listProduct);
 
-          }
+            writer.writeValue(new File(DATA), copylist);
+        } catch (Exception ex) {
 
-          return copylist.stream().map( p -> ProductDto
-                  .builder()
-                  .productid(p.getProductId())
-                  .name(p.getName())
-                  .quantity(p.getQuantity())
-                  .price(p.getPrice())
-                  .build())
-                  .collect(Collectors.toList());
+        }
 
-     }
+        return copylist;
 
-     public List<Product> getAllProducts() {
-          ObjectMapper mapper = new ObjectMapper();
-          List<Product> lista = null;
-          try {
-               lista = Arrays.asList
-                       (mapper.readValue(new File(linkFile), Product[].class));
+    }
 
-          } catch (Exception ex) {
+    public List<Product> getAllProducts() {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Product> lista = null;
+        try {
+            lista = Arrays.asList
+                    (mapper.readValue(new File(DATA), Product[].class));
 
-          }
-          return lista;
-     }
+        } catch (Exception ex) {
+
+        }
+        return lista;
+    }
 }

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ public class Product {
     private String brand;
     private double price;
     private int quantity;
-    private boolean freeShipping;
+    private Boolean freeShipping;
     private String prestige;
 
 }

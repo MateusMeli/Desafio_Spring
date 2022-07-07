@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -16,13 +17,18 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @PostMapping("/insert-articles-request")
+    @PostMapping("/insert-products-request")
     public ResponseEntity<List<ProductDto>> addProducts(@RequestBody List<Product> productList) {
-        return new ResponseEntity(service.addProducts(productList), HttpStatus.OK);
+        return new ResponseEntity<>(service.addProducts(productList), HttpStatus.OK);
     }
 
-    @GetMapping("/articles")
-    public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) Integer order) {
-        return new ResponseEntity(service.getAllProducts(order), HttpStatus.OK);
+    @GetMapping("/products")
+    public ResponseEntity<List<ProductDto>> getAllProducts(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) Boolean freeShipping,
+            @RequestParam(required = false) String prestige,
+            @RequestParam(required = false) Integer order) {
+
+        return new ResponseEntity<List<ProductDto>>(service.getAllProducts(category, freeShipping, prestige, order), HttpStatus.OK);
     }
 }
