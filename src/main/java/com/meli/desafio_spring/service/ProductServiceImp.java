@@ -20,11 +20,6 @@ public class ProductServiceImp implements ProductService{
     }
 
     @Override
-    public List<ProductDto> getByFreeShippingAndCategory(String category, boolean freeShipping) {
-        return repo.getByFreeShippingAndCategory(category, freeShipping);
-    }
-
-    @Override
     public List<ProductDto> getAllProducts() {
        List<Product> list = repo.getAllProducts();
         return list.stream().map(p -> ProductDto
@@ -35,4 +30,21 @@ public class ProductServiceImp implements ProductService{
             .collect(Collectors.toList());
 
     }
+
+    @Override
+    public List<ProductDto> getByCategory(String category) {
+        return null;
+    }
+
+    @Override
+    public List<ProductDto> getByFreeShipping(boolean freeShipping) {
+        return null;
+    }
+
+    @Override
+    public List<ProductDto> getByPrestige(String prestige) {
+        return null;
+    }
+
+
 }

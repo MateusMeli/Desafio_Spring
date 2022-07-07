@@ -8,5 +8,7 @@ import java.util.List;
 public interface ProductService {
     List<ProductDto> addProducts(List<Product> listProduct);
     List<ProductDto> getAllProducts();
-    List<ProductDto> getByFreeShippingAndCategory(String category, boolean freeShipping);
+    List<ProductDto> getByCategory(String category);
+    List<ProductDto> getByFreeShipping(boolean freeShipping);
+    List<ProductDto> getByPrestige(String prestige);
 }
