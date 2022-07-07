@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImp implements ProductService{
@@ -16,5 +17,17 @@ public class ProductServiceImp implements ProductService{
     @Override
     public List<ProductDto> addProducts(List<Product> listProduct) {
         return repo.addProducts(listProduct);
+    }
+
+    @Override
+    public List<ProductDto> getAllProducts() {
+       List<Product> list = repo.getAllProducts();
+        return list.stream().map(p -> ProductDto
+                .builder()
+                .productid(p.getProductId())
+                .name(p.getName())
+                .quantity(p.getQuantity()).build())
+            .collect(Collectors.toList());
+
     }
 }

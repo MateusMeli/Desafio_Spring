@@ -20,4 +20,9 @@ public class ProductController {
     public ResponseEntity<List<ProductDto>> addProducts(@RequestBody List<Product> productList) {
         return new ResponseEntity(service.addProducts(productList), HttpStatus.OK);
     }
+
+    @GetMapping("/articles")
+    public ResponseEntity<List<ProductDto>> getAllProducts() {
+        return new ResponseEntity(service.getAllProducts(), HttpStatus.OK);
+    }
 }
