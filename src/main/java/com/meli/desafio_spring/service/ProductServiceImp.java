@@ -101,6 +101,8 @@ public class ProductServiceImp implements ProductService {
             case 3:
                 list.sort(Comparator.comparing(Product::getPrice).reversed());
                 break;
+            default:
+                break;
         }
         return list;
     }
