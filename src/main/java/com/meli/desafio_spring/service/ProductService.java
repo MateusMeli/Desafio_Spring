@@ -7,5 +7,7 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductDto> addProducts(List<Product> listProduct);
-    List<ProductDto> getAllProducts();
+    List<ProductDto> getAllProducts(Integer order);
+
+    List<ProductDto> sort(List<ProductDto> list, Integer order);
 }

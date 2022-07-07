@@ -22,7 +22,7 @@ public class ProductController {
     }
 
     @GetMapping("/articles")
-    public ResponseEntity<List<ProductDto>> getAllProducts() {
-        return new ResponseEntity(service.getAllProducts(), HttpStatus.OK);
+    public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) Integer order) {
+        return new ResponseEntity(service.getAllProducts(order), HttpStatus.OK);
     }
 }
