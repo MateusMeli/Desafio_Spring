@@ -17,44 +17,45 @@ import java.util.stream.Collectors;
 
 @Repository
 public class ProductRepository {
+     private final String linkFile = "src/main/resources/product.json";
 
-  private final String linkFile = "src/main/resources/product.json";
+     public List<ProductDto> addProducts(List<Product> listProduct) {
+          ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+          ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
+          List<Product> actualList = null;
+          List<Product> copylist = null;
 
-  public List<ProductDto> addProducts(List<Product> listProduct) {
-    ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
-    ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
-    List<Product> actualList = null;
-    List<Product> copylist = null;
+          try {
+               actualList = Arrays.asList(mapper.readValue(new File(linkFile), Product[].class));
+               copylist = new ArrayList<>(actualList);
+               copylist.addAll(listProduct);
 
-    try {
-      actualList = Arrays.asList(mapper.readValue(new File(linkFile), Product[].class));
-      copylist = new ArrayList<>(actualList);
-      copylist.addAll(listProduct);
+               writer.writeValue(new File(linkFile), copylist);
+          } catch (Exception ex) {
 
-      writer.writeValue(new File(linkFile), copylist);
-    } catch (Exception ex) {
+          }
 
-    }
+          return copylist.stream().map( p -> ProductDto
+                  .builder()
+                  .productid(p.getProductId())
+                  .name(p.getName())
+                  .quantity(p.getQuantity())
+                  .price(p.getPrice())
+                  .build())
+                  .collect(Collectors.toList());
 
-    return copylist.stream().map(p -> ProductDto
-            .builder()
-            .productid(p.getProductId())
-            .name(p.getName())
-            .quantity(p.getQuantity()).build())
-        .collect(Collectors.toList());
+     }
 
-  }
+     public List<Product> getAllProducts() {
+          ObjectMapper mapper = new ObjectMapper();
+          List<Product> lista = null;
+          try {
+               lista = Arrays.asList
+                       (mapper.readValue(new File(linkFile), Product[].class));
 
-  public List<Product> getAllProducts() {
-    ObjectMapper mapper = new ObjectMapper();
-    List<Product> lista = null;
-    try {
-      lista = Arrays.asList
-          (mapper.readValue(new File(linkFile), Product[].class));
+          } catch (Exception ex) {
 
-    } catch (Exception ex) {
-
-    }
-    return lista;
-  }
+          }
+          return lista;
+     }
 }
