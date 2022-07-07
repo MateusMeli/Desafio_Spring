@@ -20,6 +20,13 @@ public class ProductServiceImp implements ProductService{
 
     @Override
     public List<ProductDto> getAllProducts() {
-        return repo.getAllProducts();
+       List<Product> list = repo.getAllProducts();
+        return list.stream().map(p -> ProductDto
+                .builder()
+                .productid(p.getProductId())
+                .name(p.getName())
+                .quantity(p.getQuantity()).build())
+            .collect(Collectors.toList());
+
     }
 }
