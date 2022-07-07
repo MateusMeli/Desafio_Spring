@@ -9,12 +9,17 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductServiceImp implements ProductService{
+public class ProductServiceImp implements ProductService {
     @Autowired
     ProductRepository repo;
 
     @Override
     public List<ProductDto> addProducts(List<Product> listProduct) {
         return repo.addProducts(listProduct);
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return repo.getAllProduct();
     }
 }

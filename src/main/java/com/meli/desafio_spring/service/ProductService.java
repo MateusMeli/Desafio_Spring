@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductDto> addProducts(List<Product> listProduct);
+
+    List<Product> getAllProducts();
 }

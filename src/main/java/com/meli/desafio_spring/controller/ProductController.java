@@ -20,4 +20,14 @@ public class ProductController {
     public ResponseEntity<List<ProductDto>> addProducts(@RequestBody List<Product> productList) {
         return new ResponseEntity(service.addProducts(productList), HttpStatus.OK);
     }
+
+    /**
+     * @return All list of product.
+     */
+    @GetMapping("/articles")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Product>> getAllProduct() {
+        List<Product> productList = service.getAllProducts();
+        return ResponseEntity.ok(productList);
+    }
 }
