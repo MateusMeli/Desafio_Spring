@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.meli.desafio_spring.dto.ProductDto;
 import com.meli.desafio_spring.model.Product;
 import org.springframework.stereotype.Repository;
 
@@ -12,14 +11,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class ProductRepository {
 
     private static final String DATA = "src/main/resources/product.json";
 
-    public List<ProductDto> addProducts(List<Product> listProduct) {
+    public List<Product> addProducts(List<Product> listProduct) {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
         List<Product> actualList = null;
@@ -35,12 +33,7 @@ public class ProductRepository {
 
         }
 
-        return copylist.stream().map(p -> ProductDto
-                        .builder()
-                        .productid(p.getProductId())
-                        .name(p.getName())
-                        .quantity(p.getQuantity()).build())
-                .collect(Collectors.toList());
+        return copylist;
 
     }
 

@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service
 public class ProductServiceImp implements ProductService {
@@ -20,7 +18,13 @@ public class ProductServiceImp implements ProductService {
 
     @Override
     public List<ProductDto> addProducts(List<Product> listProduct) {
-        return repo.addProducts(listProduct);
+
+        return repo.addProducts(listProduct).stream().map(p -> ProductDto
+                        .builder()
+                        .productid(p.getProductId())
+                        .name(p.getName())
+                        .quantity(p.getQuantity()).build())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -31,10 +35,9 @@ public class ProductServiceImp implements ProductService {
 
         List<Product> listProduct = repo.getAllProducts();
 
+        listProduct = productFilters(category, freeShipping, prestige, listProduct);
 
-        productFilters(category, freeShipping, prestige, listProduct);
-
-        return productFilters(category, freeShipping, prestige, listProduct)
+        return listProduct.stream()
                 .map(p -> ProductDto
                         .builder()
                         .productid(p.getProductId())
@@ -44,35 +47,36 @@ public class ProductServiceImp implements ProductService {
 
     }
 
-    private Stream<List<Product>> productFilters(
+    private List<Product> productFilters(
             Optional<String> category,
             Optional<Boolean> freeShipping,
             Optional<String> prestige,
             List<Product> listProduct
     ) {
 
-        Supplier<Stream<List<Product>>> streamProduct = () -> Stream.of(listProduct);;
+        List<Product> productListFilter = new ArrayList<>();
+
+        productListFilter.addAll(listProduct);
+
         if (category.isPresent()) {
-            streamProduct.get().filter(
-                    c -> c.get()
-                            .getCategory().equals(category.get())
-            );
+            productListFilter = productListFilter
+                    .stream()
+                    .filter(c -> c.getCategory().equals(category.get()))
+                    .collect(Collectors.toList());
         }
-        return streamProduct;
-//        return listProduct;
-//        if (freeShipping.isPresent()) {
-//            productListFilter = productListFilter
-//                    .stream()
-//                    .filter(f -> f.getFreeShipping().equals(freeShipping.get()))
-//                    .collect(Collectors.toList());
-//            ;
-//        }
-//        if (prestige.isPresent()) {
-//            productListFilter = productListFilter
-//                    .stream()
-//                    .filter(p -> p.getPrestige().equals(prestige.get()))
-//                    .collect(Collectors.toList());
-//        }
+        if (freeShipping.isPresent()) {
+            productListFilter = productListFilter
+                    .stream()
+                    .filter(f -> f.getFreeShipping().equals(freeShipping.get()))
+                    .collect(Collectors.toList());
+        }
+        if (prestige.isPresent()) {
+            productListFilter = productListFilter
+                    .stream()
+                    .filter(p -> p.getPrestige().equals(prestige.get()))
+                    .collect(Collectors.toList());
+        }
+        return productListFilter;
     }
 
 

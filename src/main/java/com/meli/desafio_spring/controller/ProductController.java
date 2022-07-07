@@ -17,19 +17,19 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @PostMapping("/insert-articles-request")
+    @PostMapping("/insert-products-request")
     public ResponseEntity<List<ProductDto>> addProducts(@RequestBody List<Product> productList) {
-        return new ResponseEntity(service.addProducts(productList), HttpStatus.OK);
+        return new ResponseEntity<>(service.addProducts(productList), HttpStatus.OK);
     }
 
-    @GetMapping("/articles")
+    @GetMapping("/products")
     public ResponseEntity<List<ProductDto>> getAllProducts(
             @RequestParam Optional<String> category,
             @RequestParam Optional<Boolean> freeShipping,
             @RequestParam Optional<String> prestige) {
 
 
-        return new ResponseEntity(service.getAllProducts(category, freeShipping, prestige), HttpStatus.OK);
+        return new ResponseEntity<>(service.getAllProducts(category, freeShipping, prestige), HttpStatus.OK);
     }
 
 

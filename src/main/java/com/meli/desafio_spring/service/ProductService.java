@@ -9,6 +9,10 @@ import java.util.Optional;
 public interface ProductService {
     List<ProductDto> addProducts(List<Product> listProduct);
 
-    List<ProductDto> getAllProducts(Optional<String> category, Optional<Boolean> freeShipping, Optional<String> prestige);
+    List<ProductDto> getAllProducts(
+            Optional<String> category,
+            Optional<Boolean> freeShipping,
+            Optional<String> prestige
+    );
 
 }
