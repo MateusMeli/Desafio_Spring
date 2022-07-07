@@ -32,5 +32,8 @@ public class ProductController {
         return new ResponseEntity<>(service.getAllProducts(category, freeShipping, prestige), HttpStatus.OK);
     }
 
-
+    @GetMapping("/articles")
+    public ResponseEntity<List<ProductDto>> getAllProducts(@RequestParam(required = false) Integer order) {
+        return new ResponseEntity(service.getAllProducts(order), HttpStatus.OK);
+    }
 }

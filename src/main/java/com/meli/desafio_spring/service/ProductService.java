@@ -15,4 +15,7 @@ public interface ProductService {
             Optional<String> prestige
     );
 
+    List<ProductDto> getAllProducts(Integer order);
+
+    List<ProductDto> sort(List<ProductDto> list, Integer order);
 }
