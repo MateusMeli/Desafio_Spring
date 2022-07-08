@@ -5,7 +5,6 @@ import com.meli.desafio_spring.model.Product;
 import com.meli.desafio_spring.model.Ticket;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
     List<ProductDto> addProducts(List<Product> listProduct);
