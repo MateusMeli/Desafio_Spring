@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.meli.desafio_spring.model.Client;
+import com.meli.desafio_spring.model.Product;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
@@ -35,5 +36,18 @@ public class ClientRepository {
 
         return copylist;
 
+    }
+
+    public List<Client> getAllClients() {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Client> lista = null;
+        try {
+            lista = Arrays.asList
+                    (mapper.readValue(new File(DATA), Client[].class));
+
+        } catch (Exception ex) {
+
+        }
+        return lista;
     }
 }
