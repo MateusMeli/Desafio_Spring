@@ -1,15 +1,13 @@
 package com.meli.desafio_spring.controller;
 
 import com.meli.desafio_spring.dto.ClientDto;
+import com.meli.desafio_spring.dto.ProductDto;
 import com.meli.desafio_spring.model.Client;
 import com.meli.desafio_spring.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +29,18 @@ public class ClientController {
     @PostMapping("/insert-clients-request")
     public ResponseEntity<List<ClientDto>> addClients(@RequestBody List<Client> clientList) {
         return new ResponseEntity<>(service.addClients(clientList), HttpStatus.OK);
+    }
+
+    /**
+     * Get a list of all clients
+     *
+     * @return Response a list of clients
+     * @see <a href="http://localhost:8080/api/vi/clients">Get All clients</a>
+     */
+    @GetMapping("/clients")
+    public ResponseEntity<List<ClientDto>> getAllClients() {
+
+        return new ResponseEntity<>(service.getAllClients(), HttpStatus.OK);
     }
 
 }

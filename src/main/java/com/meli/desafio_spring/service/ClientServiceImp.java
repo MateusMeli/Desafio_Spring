@@ -24,4 +24,19 @@ public class ClientServiceImp implements ClientService {
                         .state(c.getState()).build())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<ClientDto> getAllClients() {
+
+        List<Client> listClient = repo.getAllClients();
+
+        return listClient.stream()
+                .map(c -> ClientDto
+                        .builder()
+                        .clientId(c.getClientId())
+                        .name(c.getName())
+                        .state(c.getState()).build())
+                .collect(Collectors.toList());
+
+    }
 }
