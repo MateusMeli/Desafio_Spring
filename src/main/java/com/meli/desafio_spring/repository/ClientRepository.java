@@ -4,11 +4,13 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.meli.desafio_spring.exception.NotFoundException;
 import com.meli.desafio_spring.model.Client;
-import com.meli.desafio_spring.model.Product;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +20,7 @@ public class ClientRepository {
 
     private static final String DATA = "src/main/resources/client.json";
 
-    public List<Client> addClients(List<Client> listClient) {
+    public List<Client> addClients(List<Client> listClient) throws FileNotFoundException {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
         List<Client> actualList = null;
@@ -30,24 +32,21 @@ public class ClientRepository {
             copylist.addAll(listClient);
 
             writer.writeValue(new File(DATA), copylist);
-        } catch (Exception ex) {
-
+            return copylist;
+        } catch (NotFoundException | IOException ex) {
+            throw new FileNotFoundException("Data not found: " + DATA);
         }
-
-        return copylist;
 
     }
 
-    public List<Client> getAllClients() {
+    public List<Client> getAllClients() throws FileNotFoundException {
         ObjectMapper mapper = new ObjectMapper();
-        List<Client> lista = null;
         try {
-            lista = Arrays.asList
+            return Arrays.asList
                     (mapper.readValue(new File(DATA), Client[].class));
 
-        } catch (Exception ex) {
-
+        } catch (NotFoundException | IOException ex) {
+            throw new FileNotFoundException("Data not found: " + DATA);
         }
-        return lista;
     }
 }

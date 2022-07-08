@@ -4,7 +4,6 @@ import com.meli.desafio_spring.dto.ProductDto;
 import com.meli.desafio_spring.exception.FileNotFoundException;
 import com.meli.desafio_spring.exception.NotFoundException;
 import com.meli.desafio_spring.model.Product;
-import com.meli.desafio_spring.model.Ticket;
 import com.meli.desafio_spring.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class ProductServiceImp implements ProductService {
     ProductRepository repo;
 
     @Override
-    public List<ProductDto> addProducts(List<Product> listProduct) throws FileNotFoundException {
+    public List<ProductDto> addProducts(List<Product> listProduct) throws FileNotFoundException, java.io.FileNotFoundException {
 
         return repo.addProducts(listProduct).stream().map(p -> ProductDto
                         .builder()
@@ -35,7 +34,7 @@ public class ProductServiceImp implements ProductService {
             String category,
             Boolean freeShipping,
             String prestige,
-            Integer order) {
+            Integer order) throws java.io.FileNotFoundException {
 
         List<Product> listProduct = repo.getAllProducts();
 

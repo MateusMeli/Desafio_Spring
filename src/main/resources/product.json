@@ -4,7 +4,7 @@
   "category" : "Ferramentas",
   "brand" : "FORTGPRO",
   "price" : 1800.0,
-  "quantity" : 1,
+  "quantity" : -1,
   "freeShipping" : true,
   "prestige" : "****"
 }, {
@@ -106,4 +106,13 @@
   "quantity" : 9,
   "freeShipping" : true,
   "prestige" : "***"
+}, {
+  "productId" : 13,
+  "name" : "Shorts",
+  "category" : "Roupas",
+  "brand" : "NasCostas",
+  "price" : 275.0,
+  "quantity" : 9,
+  "freeShipping" : true,
+  "prestige" : "*****"
 } ]

@@ -1,7 +1,6 @@
 package com.meli.desafio_spring.controller;
 
 import com.meli.desafio_spring.dto.ClientDto;
-import com.meli.desafio_spring.dto.ProductDto;
 import com.meli.desafio_spring.model.Client;
 import com.meli.desafio_spring.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -27,7 +27,7 @@ public class ClientController {
      * Request to create a list of clients
      */
     @PostMapping("/insert-clients-request")
-    public ResponseEntity<List<ClientDto>> addClients(@RequestBody List<Client> clientList) {
+    public ResponseEntity<List<ClientDto>> addClients(@RequestBody List<Client> clientList) throws FileNotFoundException {
         return new ResponseEntity<>(service.addClients(clientList), HttpStatus.OK);
     }
 
@@ -38,7 +38,7 @@ public class ClientController {
      * @see <a href="http://localhost:8080/api/vi/clients">Get All clients</a>
      */
     @GetMapping("/clients")
-    public ResponseEntity<List<ClientDto>> getAllClients() {
+    public ResponseEntity<List<ClientDto>> getAllClients() throws FileNotFoundException {
 
         return new ResponseEntity<>(service.getAllClients(), HttpStatus.OK);
     }

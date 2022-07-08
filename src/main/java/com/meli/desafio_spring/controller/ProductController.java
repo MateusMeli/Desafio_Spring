@@ -1,8 +1,8 @@
 package com.meli.desafio_spring.controller;
 
 import com.meli.desafio_spring.dto.ProductDto;
-import com.meli.desafio_spring.model.ProductPurchaseRequest;
 import com.meli.desafio_spring.model.Product;
+import com.meli.desafio_spring.model.ProductPurchaseRequest;
 import com.meli.desafio_spring.model.Ticket;
 import com.meli.desafio_spring.service.ProductService;
 import com.meli.desafio_spring.service.TicketService;
@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 /**
@@ -32,7 +33,7 @@ public class ProductController {
      * Request to create a list of products
      */
     @PostMapping("/insert-products-request")
-    public ResponseEntity<List<ProductDto>> addProducts(@RequestBody List<Product> productList) {
+    public ResponseEntity<List<ProductDto>> addProducts(@RequestBody List<Product> productList) throws FileNotFoundException {
         return new ResponseEntity<>(serviceProduct.addProducts(productList), HttpStatus.OK);
     }
 
@@ -52,16 +53,16 @@ public class ProductController {
             @RequestParam(required = false) String category,
             @RequestParam(required = false) Boolean freeShipping,
             @RequestParam(required = false) String prestige,
-            @RequestParam(required = false) Integer order) {
+            @RequestParam(required = false) Integer order) throws FileNotFoundException {
 
 
         return new ResponseEntity<>(serviceProduct.getAllProducts(category, freeShipping, prestige, order), HttpStatus.OK);
     }
 
     @PostMapping("/purchase-request")
-    public ResponseEntity<Ticket> purchaseRequest(@RequestBody ProductPurchaseRequest purchaseObject) {
+    public ResponseEntity<Ticket> purchaseRequest(@RequestBody ProductPurchaseRequest purchaseObject) throws FileNotFoundException {
 
-        return new ResponseEntity<Ticket>(serviceTicket.purchaseRequest(purchaseObject), HttpStatus.OK);
+        return new ResponseEntity<>(serviceTicket.purchaseRequest(purchaseObject), HttpStatus.OK);
     }
 
 }

@@ -6,6 +6,7 @@ import com.meli.desafio_spring.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,7 +16,7 @@ public class ClientServiceImp implements ClientService {
     ClientRepository repo;
 
     @Override
-    public List<ClientDto> addClients(List<Client> listClient) {
+    public List<ClientDto> addClients(List<Client> listClient) throws FileNotFoundException {
 
         return repo.addClients(listClient).stream().map(c -> ClientDto
                         .builder()
@@ -26,7 +27,7 @@ public class ClientServiceImp implements ClientService {
     }
 
     @Override
-    public List<ClientDto> getAllClients() {
+    public List<ClientDto> getAllClients() throws FileNotFoundException {
 
         List<Client> listClient = repo.getAllClients();
 

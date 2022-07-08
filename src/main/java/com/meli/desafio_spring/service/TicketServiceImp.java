@@ -1,7 +1,7 @@
 package com.meli.desafio_spring.service;
 
-import com.meli.desafio_spring.dto.ProductDto;
 import com.meli.desafio_spring.dto.ProductDtoPurchase;
+import com.meli.desafio_spring.exception.ExceededStock;
 import com.meli.desafio_spring.model.Product;
 import com.meli.desafio_spring.model.ProductPurchaseRequest;
 import com.meli.desafio_spring.model.Ticket;
@@ -10,6 +10,7 @@ import com.meli.desafio_spring.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class TicketServiceImp implements TicketService {
     private ProductRepository repoProduct;
 
     @Override
-    public Ticket purchaseRequest(ProductPurchaseRequest purchaseObject) {
+    public Ticket purchaseRequest(ProductPurchaseRequest purchaseObject) throws FileNotFoundException {
         Ticket ticket;
         double totalTicket = 0;
         List<Product> listProducts = repoProduct.getAllProducts();
@@ -30,7 +31,7 @@ public class TicketServiceImp implements TicketService {
 
         purchaseObject.getProductPurchaseRequest().forEach(pdto -> {
                     if (findProductById(listProducts, pdto).getQuantity() < pdto.getQuantity()) {
-                        throw new RuntimeException("Quantidade desejada na compra excede ao estoque.");
+                        throw new ExceededStock("Desired quantity in excess of stock purchase.");
                     }
 
                     listProductsTicket.add(listProducts.stream()
