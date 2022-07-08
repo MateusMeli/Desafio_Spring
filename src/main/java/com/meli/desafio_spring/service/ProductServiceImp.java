@@ -1,8 +1,9 @@
 package com.meli.desafio_spring.service;
 
 import com.meli.desafio_spring.dto.ProductDto;
+import com.meli.desafio_spring.exception.FileNotFoundException;
+import com.meli.desafio_spring.exception.NotFoundException;
 import com.meli.desafio_spring.model.Product;
-import com.meli.desafio_spring.model.Ticket;
 import com.meli.desafio_spring.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +19,7 @@ public class ProductServiceImp implements ProductService {
     ProductRepository repo;
 
     @Override
-    public List<ProductDto> addProducts(List<Product> listProduct) {
+    public List<ProductDto> addProducts(List<Product> listProduct) throws FileNotFoundException, java.io.FileNotFoundException {
 
         return repo.addProducts(listProduct).stream().map(p -> ProductDto
                         .builder()
@@ -33,7 +34,7 @@ public class ProductServiceImp implements ProductService {
             String category,
             Boolean freeShipping,
             String prestige,
-            Integer order) {
+            Integer order) throws java.io.FileNotFoundException {
 
         List<Product> listProduct = repo.getAllProducts();
 
@@ -68,18 +69,27 @@ public class ProductServiceImp implements ProductService {
                     .stream()
                     .filter(c -> c.getCategory().equals(category))
                     .collect(Collectors.toList());
+            if(productListFilter.isEmpty()) {
+                throw new NotFoundException("Category Not found: " + category);
+            }
         }
         if (freeShipping != null) {
             productListFilter = productListFilter
                     .stream()
                     .filter(f -> f.getFreeShipping().equals(freeShipping))
                     .collect(Collectors.toList());
+            if(productListFilter.isEmpty()) {
+                throw new NotFoundException("Free Shipping Not found: " + freeShipping);
+            }
         }
         if (prestige != null) {
             productListFilter = productListFilter
                     .stream()
                     .filter(p -> p.getPrestige().equals(prestige))
                     .collect(Collectors.toList());
+            if(productListFilter.isEmpty()) {
+                throw new NotFoundException("Prestige Not found: " + prestige);
+            }
         }
         if (order != null) {
             productListFilter = sort(productListFilter, order);
@@ -103,7 +113,7 @@ public class ProductServiceImp implements ProductService {
                 list.sort(Comparator.comparing(Product::getPrice).reversed());
                 break;
             default:
-                break;
+                throw new NotFoundException("This parameter does not exist: " + order);
         }
         return list;
     }

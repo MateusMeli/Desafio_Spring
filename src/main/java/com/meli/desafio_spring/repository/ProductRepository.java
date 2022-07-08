@@ -5,12 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.meli.desafio_spring.dto.ProductDtoPurchase;
+import com.meli.desafio_spring.exception.NotFoundException;
 import com.meli.desafio_spring.model.Product;
 import com.meli.desafio_spring.model.ProductPurchaseRequest;
-import com.meli.desafio_spring.model.Ticket;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,7 +23,7 @@ public class ProductRepository {
 
     private static final String DATA = "src/main/resources/product.json";
 
-    public List<Product> addProducts(List<Product> listProduct) {
+    public List<Product> addProducts(List<Product> listProduct) throws FileNotFoundException {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
         List<Product> actualList = null;
@@ -33,24 +35,26 @@ public class ProductRepository {
             copylist.addAll(listProduct);
 
             writer.writeValue(new File(DATA), copylist);
-        } catch (Exception ex) {
-
+            return copylist;
+        } catch (NotFoundException | IOException ex) {
+            throw new FileNotFoundException("Data not found: " + DATA);
         }
 
-        return copylist;
+
     }
 
-    public List<Product> getAllProducts() {
+    public List<Product> getAllProducts() throws FileNotFoundException {
         ObjectMapper mapper = new ObjectMapper();
         List<Product> lista = new ArrayList<>();
         try {
             lista.addAll(Arrays.asList
                     (mapper.readValue(new File(DATA), Product[].class)));
+            return Arrays.asList
+                    (mapper.readValue(new File(DATA), Product[].class));
 
-        } catch (Exception ex) {
-
+        } catch (NotFoundException | IOException ex) {
+            throw new FileNotFoundException("Data not found: " + DATA);
         }
-        return lista;
     }
 
     public void updateProductStock(ProductPurchaseRequest productPurchaseRequest) {
