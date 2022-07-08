@@ -4,7 +4,6 @@ import com.meli.desafio_spring.dto.ProductDto;
 import com.meli.desafio_spring.model.Product;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface ProductService {
     List<ProductDto> addProducts(List<Product> listProduct);

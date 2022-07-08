@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -101,6 +100,8 @@ public class ProductServiceImp implements ProductService {
                 break;
             case 3:
                 list.sort(Comparator.comparing(Product::getPrice).reversed());
+                break;
+            default:
                 break;
         }
         return list;
