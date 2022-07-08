@@ -1,4 +1,4 @@
-package com.meli.desafio_spring.repository.model;
+package com.meli.desafio_spring.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

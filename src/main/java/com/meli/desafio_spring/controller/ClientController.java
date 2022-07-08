@@ -21,9 +21,10 @@ public class ClientController {
     private ClientService service;
 
     /**
-     * @param clientList
+     * @param clientList list of clients
      * @return Response a list of clients (data transfer object)
      * @see <a href="http://localhost:8080/api/vi/insert-client-request">Add Clients</a>
+     * @throws FileNotFoundException When not exits file
      * Request to create a list of clients
      */
     @PostMapping("/insert-clients-request")
@@ -34,6 +35,10 @@ public class ClientController {
     /**
      * Get a list of all clients
      *
+     * @param name - ?name=name - Get All Clients Filtered By Name
+     * @param state - ?state=stateName - Get All Clients Filtered By State
+     * @param cpf - ?cpf=cpf - Get All Clients Filtered By Cpf
+     * @throws FileNotFoundException When not exits file
      * @return Response a list of clients
      * @see <a href="http://localhost:8080/api/vi/clients">Get All clients</a>
      */
