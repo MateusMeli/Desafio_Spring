@@ -9,5 +9,5 @@ import java.util.List;
 @Getter
 @Setter
 public class ProductPurchaseRequest {
-    List<ProductDtoPurchase> productPurchaseRequest;
+    private List<ProductDtoPurchase> productPurchaseRequest;
 }
