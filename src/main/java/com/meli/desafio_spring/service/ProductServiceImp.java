@@ -4,6 +4,7 @@ import com.meli.desafio_spring.dto.ProductDto;
 import com.meli.desafio_spring.exception.FileNotFoundException;
 import com.meli.desafio_spring.exception.NotFoundException;
 import com.meli.desafio_spring.model.Product;
+import com.meli.desafio_spring.model.Ticket;
 import com.meli.desafio_spring.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -117,4 +118,5 @@ public class ProductServiceImp implements ProductService {
         }
         return list;
     }
+
 }

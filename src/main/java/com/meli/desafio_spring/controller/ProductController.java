@@ -1,8 +1,11 @@
 package com.meli.desafio_spring.controller;
 
 import com.meli.desafio_spring.dto.ProductDto;
+import com.meli.desafio_spring.model.ProductPurchaseRequest;
 import com.meli.desafio_spring.model.Product;
+import com.meli.desafio_spring.model.Ticket;
 import com.meli.desafio_spring.service.ProductService;
+import com.meli.desafio_spring.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +20,10 @@ import java.util.List;
 @RequestMapping("/api/v1")
 public class ProductController {
     @Autowired
-    private ProductService service;
+    private ProductService serviceProduct;
+
+    @Autowired
+    private TicketService serviceTicket;
 
     /**
      * @param productList
@@ -26,10 +32,8 @@ public class ProductController {
      * Request to create a list of products
      */
     @PostMapping("/insert-products-request")
-    public ResponseEntity<List<ProductDto>> addProducts(
-            @RequestBody List<Product> productList
-    ) {
-        return new ResponseEntity<>(service.addProducts(productList), HttpStatus.OK);
+    public ResponseEntity<List<ProductDto>> addProducts(@RequestBody List<Product> productList) {
+        return new ResponseEntity<>(serviceProduct.addProducts(productList), HttpStatus.OK);
     }
 
     /**
@@ -50,7 +54,14 @@ public class ProductController {
             @RequestParam(required = false) String prestige,
             @RequestParam(required = false) Integer order) {
 
-        return new ResponseEntity<>(service.getAllProducts(category, freeShipping, prestige, order), HttpStatus.OK);
+
+        return new ResponseEntity<>(serviceProduct.getAllProducts(category, freeShipping, prestige, order), HttpStatus.OK);
+    }
+
+    @PostMapping("/purchase-request")
+    public ResponseEntity<Ticket> purchaseRequest(@RequestBody ProductPurchaseRequest purchaseObject) {
+
+        return new ResponseEntity<Ticket>(serviceTicket.purchaseRequest(purchaseObject), HttpStatus.OK);
     }
 
 }
