@@ -38,9 +38,14 @@ public class ClientController {
      * @see <a href="http://localhost:8080/api/vi/clients">Get All clients</a>
      */
     @GetMapping("/clients")
-    public ResponseEntity<List<ClientDto>> getAllClients() throws FileNotFoundException {
+    public ResponseEntity<List<ClientDto>> getAllClients(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String state,
+            @RequestParam(required = false) Long cpf
 
-        return new ResponseEntity<>(service.getAllClients(), HttpStatus.OK);
+            ) throws FileNotFoundException {
+
+        return new ResponseEntity<>(service.getAllClients(name, state, cpf), HttpStatus.OK);
     }
 
 }
