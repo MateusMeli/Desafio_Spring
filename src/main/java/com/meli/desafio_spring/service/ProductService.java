@@ -2,6 +2,7 @@ package com.meli.desafio_spring.service;
 
 import com.meli.desafio_spring.dto.ProductDto;
 import com.meli.desafio_spring.model.Product;
+import com.meli.desafio_spring.model.Ticket;
 
 import java.util.List;
 import java.util.Optional;
