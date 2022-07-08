@@ -4,10 +4,13 @@ import com.fasterxml.jackson.core.util.DefaultPrettyPrinter;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.meli.desafio_spring.exception.FileNotFoundException;
+import com.meli.desafio_spring.exception.NotFoundException;
 import com.meli.desafio_spring.model.Product;
 import org.springframework.stereotype.Repository;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,7 +20,7 @@ public class ProductRepository {
 
     private static final String DATA = "src/main/resources/product.json";
 
-    public List<Product> addProducts(List<Product> listProduct) {
+    public List<Product> addProducts(List<Product> listProduct) throws FileNotFoundException {
         ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         ObjectWriter writer = mapper.writer(new DefaultPrettyPrinter());
         List<Product> actualList = null;
@@ -29,24 +32,22 @@ public class ProductRepository {
             copylist.addAll(listProduct);
 
             writer.writeValue(new File(DATA), copylist);
-        } catch (Exception ex) {
-
+            return copylist;
+        } catch (NotFoundException | IOException ex) {
+            throw new FileNotFoundException("Data not found: " + DATA);
         }
 
-        return copylist;
 
     }
 
     public List<Product> getAllProducts() {
         ObjectMapper mapper = new ObjectMapper();
-        List<Product> lista = null;
         try {
-            lista = Arrays.asList
+            return Arrays.asList
                     (mapper.readValue(new File(DATA), Product[].class));
 
-        } catch (Exception ex) {
-
+        } catch (NotFoundException | IOException ex) {
+            throw new FileNotFoundException("Data not found: " + DATA);
         }
-        return lista;
     }
 }
