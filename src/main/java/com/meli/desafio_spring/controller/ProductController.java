@@ -1,7 +1,6 @@
 package com.meli.desafio_spring.controller;
 
 import com.meli.desafio_spring.dto.ProductDto;
-import com.meli.desafio_spring.exception.IllegalArgsException;
 import com.meli.desafio_spring.model.Product;
 import com.meli.desafio_spring.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +46,7 @@ public class ProductController {
     @GetMapping("/products")
     public ResponseEntity<List<ProductDto>> getAllProducts(
             @RequestParam(required = false) String category,
-            @RequestParam(required = false) boolean freeShipping,
+            @RequestParam(required = false) Boolean freeShipping,
             @RequestParam(required = false) String prestige,
             @RequestParam(required = false) Integer order) {
 

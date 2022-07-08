@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.time.LocalDateTime;
 
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 public class NotFoundExeHandler {
 
 
-    @ExceptionHandler(NotFoundException.class)
+    @ExceptionHandler({NotFoundException.class})
     public ResponseEntity<ExceptionDetails> handlerNotFoundEx(NotFoundException ex) {
 
         return new ResponseEntity<>(ExceptionDetails.builder()
@@ -43,12 +44,12 @@ public class NotFoundExeHandler {
 
     }
 
-    @ExceptionHandler(IllegalArgsException.class)
-    public ResponseEntity<ExceptionDetails> handlerNotFoundEx(IllegalArgsException e) {
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ExceptionDetails> handlerNotFoundEx(MethodArgumentTypeMismatchException e) {
         return new ResponseEntity<>(ExceptionDetails.builder()
                 .title("Bad Request.")
                 .status(HttpStatus.BAD_REQUEST.value())
-                .message(e.getMessage())
+                .message("Bad Request. Param " + e.getName() + " has invalid value: " + e.getValue() + ". Expected: Boolean" )
                 .localDateTime(LocalDateTime.now())
                 .build(),
                 HttpStatus.BAD_REQUEST
