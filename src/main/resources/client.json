@@ -1,0 +1,41 @@
+[ {
+  "clientId" : 1,
+  "name" : "Angelica",
+  "state" : "GO",
+  "cpf" : 11111111111
+}, {
+  "clientId" : 2,
+  "name" : "Daiana",
+  "state" : "SP",
+  "cpf" : 22222222222
+}, {
+  "clientId" : 3,
+  "name" : "David",
+  "state" : "RJ",
+  "cpf" : 33333333333
+}, {
+  "clientId" : 4,
+  "name" : "Gustavo",
+  "state" : "MG",
+  "cpf" : 44444444444
+}, {
+  "clientId" : 5,
+  "name" : "Mateus",
+  "state" : "DF",
+  "cpf" : 55555555555
+}, {
+  "clientId" : 6,
+  "name" : "Matheus",
+  "state" : "SC",
+  "cpf" : 66666666666
+}, {
+  "clientId" : 7,
+  "name" : "Teste",
+  "state" : "RO",
+  "cpf" : 77777777777
+}, {
+  "clientId" : 8,
+  "name" : "Teste 2",
+  "state" : "RR",
+  "cpf" : 88888888888
+} ]
